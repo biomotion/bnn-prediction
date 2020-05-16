@@ -50,6 +50,6 @@ docker run -it --rm \
         -v $HOME/.Xauthority:/root/.Xauthority \
         -v /dev:/dev \
         -v "${PWD}/catkin_ws:/catkin_ws" \
-        -v "${PWD}/bags:/bags" \
+        -v "${PWD}/dataset:/dataset" \
         -w /catkin_ws \
         biomotion/bnn-prediction:latest $BASH_OPTION

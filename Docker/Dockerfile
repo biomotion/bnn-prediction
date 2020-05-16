@@ -1,7 +1,7 @@
-FROM osrf/ros:kinetic-desktop-full
+FROM osrf/ros:melodic-desktop-full
 
 RUN apt-get update && apt-get install -y \
-    vim \
+    vim python-pip python3-pip \
     ros-${ROS_DISTRO}-navigation \
     ros-${ROS_DISTRO}-pcl-conversions \
     ros-${ROS_DISTRO}-pcl-ros \
@@ -10,10 +10,30 @@ RUN apt-get update && apt-get install -y \
     echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> ~/.bashrc && \
     echo "source /catkin_ws/devel/setup.bash" >> ~/.bashrc
 
+RUN python3 -m pip install --upgrade pip \
+    && pip3 install \
+        jupyter \
+        numpy \
+        scipy \
+        matplotlib \
+        nuscenes-devkit
+
+RUN jupyter notebook --generate-config \
+    && echo "c.NotebookApp.allow_root = True" >> /root/.jupyter/jupyter_notebook_config.py \
+    && echo "c.NotebookApp.ip = '0.0.0.0'" >> /root/.jupyter/jupyter_notebook_config.py \
+    && echo "c.NotebookApp.password = 'sha1:b22dd1ea32ec:8d7e23c36485866b1f6d254be4eceb5fc389d0d1'" >> /root/.jupyter/jupyter_notebook_config.py \
+    && echo "c.NotebookApp.open_browser = False" >> /root/.jupyter/jupyter_notebook_config.py
+    
+
+RUN python -m pip install --upgrade pip && \
+    pip install \
+        numpy
+
+
 # when you use melodic, uncomment this to avoid confliction
-# RUN rm /usr/include/flann/ext/lz4.h /usr/include/flann/ext/lz4hc.h && \
-#     ln -s /usr/include/lz4.h /usr/include/flann/ext/lz4.h && \
-#     ln -s /usr/include/lz4hc.h /usr/include/flann/ext/lz4hc.h
+RUN rm /usr/include/flann/ext/lz4.h /usr/include/flann/ext/lz4hc.h && \
+    ln -s /usr/include/lz4.h /usr/include/flann/ext/lz4.h && \
+    ln -s /usr/include/lz4hc.h /usr/include/flann/ext/lz4hc.h
 
 # ENV PCL_VERSION 1.8.0
 # WORKDIR /tmp

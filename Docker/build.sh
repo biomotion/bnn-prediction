@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker build --rm --no-cache -t biomotion/bnn-prediction:latest .
+docker build --rm -t biomotion/bnn-prediction:latest .

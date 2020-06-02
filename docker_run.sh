@@ -49,7 +49,7 @@ docker run -it --rm \
         -e ROS_MASTER_URI=$ROS_MASTER_URI \
         -v $HOME/.Xauthority:/root/.Xauthority \
         -v /dev:/dev \
-        -v "${PWD}/catkin_ws:/catkin_ws" \
-        -v "${PWD}/dataset:/dataset" \
-        -w /catkin_ws \
+        -v "${PWD}:/workspace" \
+        -v "/data/datasets:/data" \
+        -w /workspace \
         biomotion/bnn-prediction:latest $BASH_OPTION

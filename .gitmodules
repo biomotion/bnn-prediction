@@ -1,0 +1,3 @@
+[submodule "argoverse-forecasting"]
+	path = argoverse-forecasting
+	url = https://github.com/jagjeet-singh/argoverse-forecasting
